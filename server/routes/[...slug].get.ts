@@ -2,21 +2,20 @@ import supabase from "../../components/supabase";
 
 export default defineEventHandler(async (event) => {
   try {
+    setHeader(event, "Content-Type", "text/markdown")
     const slug = getRouterParam(event, "slug");
-    console.log(slug);
-    // maybeSingle? 極度🏚️
     const getMD = await supabase
       .from("markdown")
       .select("*")
       .eq("slug", `${slug}`)
       .maybeSingle();
-    console.log(getMD);
-    if (true) {
-    }
-    return {
-      hi: "world",
-      c: getMD,
-    };
+      // Its just maybe single, I have no clue what does do.
+      const data = getMD;
+      if (!data.data || data.data === null) {
+        return "Content not found"
+      } else {
+        return data.data.content
+      }
   } catch (e) {
     console.log(e);
   }
