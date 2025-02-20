@@ -1,0 +1,11 @@
+--- Create Slugs Table to check if the slug has been used before
+create table slugs (
+  slug text primary key
+)
+
+--- Create the main table, where all of the markdown text is stored.
+create table markdown (
+    slug text not null primary key,
+    content text not null,
+    date_created text
+)
