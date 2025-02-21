@@ -10,6 +10,7 @@
     "nitropack": "latest"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.48.1"
+    "@supabase/supabase-js": "^2.48.1",
+    "uuid": "^11.1.0"
   }
 }
