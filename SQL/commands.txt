@@ -10,3 +10,9 @@ create table markdown (
     date_created text
     ip: text not null
 )
+
+--- Health Check Tests
+create table health_check (
+    id bigint primary key generated always as identity,
+    status text not null default 'healthy'
+);
