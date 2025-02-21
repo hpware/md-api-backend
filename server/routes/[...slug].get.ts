@@ -8,10 +8,8 @@ export default defineEventHandler(async (event) => {
     const date = event.headers.get("date");
     console.log(slugorg)
     let slug = ""
-    let slugboolean = false;
     if (slugorg.includes(",json") || slugorg.includes("json,")) {
         slug = slugorg.replace("json", "").replace(",", "");
-        slugboolean = true;
     } else {
         slug = slugorg
     }
@@ -22,7 +20,7 @@ export default defineEventHandler(async (event) => {
       .maybeSingle();
       // Its just maybe single, I have no clue what does do.
       const data = getMD;
-      if (slugboolean = true) {
+      if ((slugorg.includes(",json") || slugorg.includes("json,"))) {
         if (!data.data || data.data === null) {
             return data
           } else {
@@ -36,9 +34,9 @@ export default defineEventHandler(async (event) => {
       } else {
         if (!data.data || data.data === null) {
             return "## Content not found"
-          } else {
-            return data.data.content
           }
+          return data.data.content
+
       }
   } catch (e) {
     console.log(e);
