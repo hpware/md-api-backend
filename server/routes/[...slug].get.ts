@@ -6,10 +6,10 @@ export default defineEventHandler(async (event) => {
     const slugorg = getRouterParam(event, "slug").replace("/", ",");
     const etag = event.headers.get("etag");
     const date = event.headers.get("date");
-    console.log(slugorg)
     let slug = ""
     if (slugorg.includes(",json") || slugorg.includes("json,")) {
         slug = slugorg.replace("json", "").replace(",", "");
+        setHeader(event, "Content-Type", "application/json");
     } else {
         slug = slugorg
     }
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
       .select("*")
       .eq("slug", `${slug}`)
       .maybeSingle();
-      // Its just maybe single, I have no clue what does do.
+      // Its just maybe single, I have no clue what does it do.
       const data = getMD;
       if ((slugorg.includes(",json") || slugorg.includes("json,"))) {
         if (!data.data || data.data === null) {
