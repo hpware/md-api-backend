@@ -8,4 +8,5 @@ create table markdown (
     slug text not null primary key,
     content text not null,
     date_created text
+    ip: text not null
 )

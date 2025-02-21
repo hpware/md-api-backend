@@ -13,9 +13,7 @@ export default async function (length) {
       slug += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     const check = await supabase.from("slugs").select("*").eq("slug", slug);
-    console.log(check);
     if (check.data.length === 0) {
-      console.log("step end;");
       return slug;
     } else {
       slug += characters.charAt(Math.floor(Math.random() * characters.length));
