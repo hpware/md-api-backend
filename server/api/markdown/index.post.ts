@@ -12,8 +12,7 @@ export default defineEventHandler(async (event) => {
     .insert([{ slug: slug, content: body, date_created: date, ip: uuid }]);
   return {
     slug: slug,
-    body: body,
-    md: InsertMD,
-    uuid: uuid
+    password: uuid,
+    error: InsertMD.error
   };
 });

@@ -1,12 +1,11 @@
 import supabase from "../../../components/supabase";
 
 export default defineEventHandler(async (event) => {
-  const slug = getRouterParam(event, "slug");
-  const UpdateMD = supabase
+  const slug = getRouterParam(event, "key");
+  const DeleteMD = await supabase
     .from("markdown")
-    .update({})
-    .eq("slug", "index")
-    .select();
+    .delete()
+    .eq("ip", slug);
   return {
     slug: slug,
   };
