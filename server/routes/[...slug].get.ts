@@ -1,11 +1,8 @@
 import supabase from "../../components/supabase";
-import { v4 as uuidv4 } from "uuid";
 export default defineEventHandler(async (event) => {
+  const slugorg = getRouterParam(event, "slug").replace("/", ",");
   try {
     setHeader(event, "Content-Type", "text/markdown");
-    const slugorg = getRouterParam(event, "slug").replace("/", ",");
-    const etag = event.headers.get("etag");
-    const date = event.headers.get("date");
     let slug = "";
     if (slugorg.includes(",json") || slugorg.includes("json,")) {
       slug = slugorg.replace("json", "").replace(",", "");
@@ -28,7 +25,7 @@ export default defineEventHandler(async (event) => {
           slug: data.data.slug,
           content: data.data.content,
           date_created: data.data.date_created,
-          event: etag,
+          error: false,
         };
       }
     } else {
@@ -38,6 +35,21 @@ export default defineEventHandler(async (event) => {
       return data.data.content;
     }
   } catch (e) {
-    console.log(e);
+    if (slugorg.includes(",json") || slugorg.includes("json,")) {
+      setHeader(event, "Content-Type", "application/json");
+      return {
+        slug:  null,
+        content: `## Oops! An error has accoured
+          Error: ${e.message}
+        `,
+        date_created: null,
+        error: true,
+      }
+    } else {
+      setHeader(event, "Content-Type", "text/markdown");
+      return `## Oops! An error has accoured
+        Error: ${e.message}
+      `
+    }
   }
 });
