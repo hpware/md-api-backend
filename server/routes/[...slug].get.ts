@@ -15,7 +15,6 @@ export default defineEventHandler(async (event) => {
       .select("*")
       .eq("slug", `${slug}`)
       .maybeSingle();
-    // Its just maybe single, I have no clue what does it do.
     const data = getMD;
     if (slugorg.includes(",json") || slugorg.includes("json,")) {
       if (!data.data || data.data === null) {

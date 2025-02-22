@@ -9,28 +9,24 @@ export default defineEventHandler(async (event) => {
             })
             .select()
             .single();
-
         if (error) {
-            return {
-                status: "not healthy",
-                timestamp: new Date().toISOString(),
-                database: {
-                    status: "unavailable"
-                }
-            }
+            throw createError({
+                statusCode: Number(error.code),
+                message: error.message
+            })
         }
         return {
             status: 'healthy',
+            error: null,
             timestamp: new Date().toISOString(),
             database: {
                 status: 'connected',
             }
         };
-
-    } catch (err) {
-        console.error('Health check failed:', err);
+    } catch (e) {
         return {
             status: "not healthy",
+            error: e,
             timestamp: new Date().toISOString(),
             database: {
                 status: "unavailable"

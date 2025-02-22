@@ -10,9 +10,16 @@ export default defineEventHandler(async (event) => {
   const InsertMD = await supabase
     .from("markdown")
     .insert([{ slug: slug, content: body, date_created: date, ip: uuid }]);
+    if (InsertMD.error) {
+      return {
+        slug: null,
+        password: null,
+        error: InsertMD.error,
+      }
+    }
   return {
     slug: slug,
     password: uuid,
-    error: InsertMD.error
+    error: null
   };
 });
