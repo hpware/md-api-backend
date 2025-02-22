@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
           content: data.data.content,
           date_created: data.data.date_created,
           error: false,
+          errordata: null,
         };
       }
     } else {
@@ -43,6 +44,7 @@ export default defineEventHandler(async (event) => {
         `,
         date_created: null,
         error: true,
+        errordata: e
       }
     } else {
       setHeader(event, "Content-Type", "text/markdown");
