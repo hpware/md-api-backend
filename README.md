@@ -1,5 +1,5 @@
 # Markdown API Backend
-Docs Page: https://yhw.tw/V40Gk
+Docs Page: https://md-api-backend.vercel.app/viewer/YikYZR
 ### Want to use your local device?
 This project uses bun, but you can still use npm by changing all the bun -> npm :)
 ```bash
@@ -179,7 +179,7 @@ When you put a post request request on this endpoint, you can change the content
 ##### Data (Healthy): 
 ```json
 {
-	"slug": "e58872c3-5c2d-4d1e-8cd6-32385a538682",
+	"slug": "your-slug-here",
 	"error": null
 }
 ```
@@ -224,6 +224,7 @@ This is the endpoint where you can delete your published markdown, just use the 
 ```
 
 Create it: [[#/api/markdown/index]]
+
 Try it out: https://md-api-backend.vercel.app/api/action/{your-token}
 
 Via Curl: 
@@ -232,3 +233,8 @@ curl --request DELETE \
   --url https://md-api-backend.vercel.app/api/action/{your-token} \
   --header 'User-Agent: insomnia/10.3.1' 
 ```
+
+### /viewer/{slug}
+This only redirect to my project I told earlier.
+
+Try it out: https://md-api-backend.vercel.app/viewer/3g8v17
