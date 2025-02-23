@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 
 export default defineEventHandler(async (event) => {
   try {
-  const date = event.headers.get("date");
-  const body = new Date().toISOString();
+  const date = new Date().toISOString();
+  const body = readRawBody(event);
   const slug = await genSlug(6);
   const uuid = await uuidv4();
   const InsertMD = await supabase
