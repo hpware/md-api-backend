@@ -13,6 +13,7 @@ This project uses:
 - Supabase
 - Nitro Build
 - Bun
+- uuidV4
 ## About this project:
 This is a project I've been thinking about a while, a platform where you can put, store, and view markdown files, all self host-able. In December last year (2024), I build this platform (https://markdown.yuanhau.com ) using VueJS, Vite and Marked. To build a really bad front end for my markdown files stored on CloudFlare R2 or Github Pages.  I need a backend to push for my post, I have not found any **free** solutions, so I made my own, built with Nitro build. 
 
@@ -23,6 +24,9 @@ There is nothing wrong with supabase, but it's just a wrapper for postgres, whic
 ### 2. Use the same auth key
 For now, new slugs aka markdown posts, can be only deleted if the owner of the content (or me) decides to delete the contents, in the near future, the platform will allow multiple slugs (or contents) to be edited with one key, and one key only.
 ## How to use
+### /
+#### (GET)
+This endpoint redirects to this Github Repo.
 ###  /{slug} 
 #### (GET)
 This directly gives the frontend / the user the markdown file from the database
@@ -171,6 +175,60 @@ curl --request POST \
 ```
 ### /api/action/{token}
 #### (POST)
+When you put a post request request on this endpoint, you can change the contents of the slug associated with that token, 
+##### Data (Healthy): 
+```json
+{
+	"slug": "e58872c3-5c2d-4d1e-8cd6-32385a538682",
+	"error": null
+}
+```
 
+##### Data (Not Healthy): 
+```json
+{
+	"slug": null,
+	"error": {}
+}
+```
+
+Try it out: https://md-api-backend.vercel.app/api/action/e58872c3-5c2d-4d1e-8cd6-32385a538682
+
+Via Curl: 
+```bash
+curl --request POST \
+  --url https://md-api-backend.vercel.app/api/action/e58872c3-5c2d-4d1e-8cd6-32385a538682 \
+  --header 'Content-Type: text/plain' \
+  --header 'User-Agent: insomnia/10.3.1' \
+  --data 'your-markdown-here'
+```
 
 #### (DELETE)
+This is the endpoint where you can delete your published markdown, just use the same link to POST and DELETE (I hope you don't make any whoopsies)
+##### Data (Healthy): 
+```json
+{
+	slug: "slug-here",
+    status: "success",
+    error: null
+}
+```
+
+##### Data (Not Healthy): 
+```json
+{
+    slug: null,
+    status: "failed",
+    error: {}
+}
+```
+
+Create it: [[#/api/markdown/index]]
+Try it out: https://md-api-backend.vercel.app/api/action/{your-token}
+
+Via Curl: 
+```bash
+curl --request DELETE \
+  --url https://md-api-backend.vercel.app/api/action/{your-token} \
+  --header 'User-Agent: insomnia/10.3.1' 
+```
