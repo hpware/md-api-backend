@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
     .from("markdown")
     .update({ content: body })
     .eq("ip", slug)
+    .select('*')
   if (UpdateMD.error) {
     throw createError({
       statusCode: Number(UpdateMD.error.code),
@@ -15,7 +16,7 @@ export default defineEventHandler(async (event) => {
     })
   }
   return {
-    slug: slug,
+    slug: UpdateMD.data[0].slug,
     error: null,
   };
 } catch (e) {
