@@ -1,4 +1,5 @@
-import supabase from "../../components/supabase";
+//import supabase from "../../components/supabase";
+import p from "../../components/database";
 export default defineEventHandler(async (event) => {
   const slugorg = getRouterParam(event, "slug").replace("/", ",");
   try {
@@ -10,29 +11,34 @@ export default defineEventHandler(async (event) => {
     } else {
       slug = slugorg;
     }
-    const getMD = await supabase
+    /*const getMD = await supabase
       .from("markdown")
       .select("*")
       .eq("slug", `${slug}`)
       .maybeSingle();
+      */
+    const getMD = await p`
+      select * from markdown
+      where slug = ${slug}
+    `
     const data = getMD;
     if (slugorg.includes(",json") || slugorg.includes("json,")) {
-      if (!data.data || data.data === null) {
+      if (!data || data === null || data === undefined) {
         return data;
       } else {
         return {
-          slug: data.data.slug,
-          content: data.data.content,
-          date_created: data.data.date_created,
+          slug: data.slug,
+          content: data.content,
+          date_created: data.date_created,
           error: false,
           errordata: null,
         };
       }
     } else {
-      if (!data.data || data.data === null) {
+      if (!data || data === null || data == undefined) {
         return "## Content not found";
       }
-      return data.data.content;
+      return data.content;
     }
   } catch (e) {
     if (slugorg.includes(",json") || slugorg.includes("json,")) {

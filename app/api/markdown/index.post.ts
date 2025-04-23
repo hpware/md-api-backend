@@ -1,4 +1,5 @@
-import supabase from "../../../components/supabase";
+//import supabase from "../../../components/supabase";
+import p from "../../../components/database";
 import genSlug from "../../../components/genSlug";
 import { v4 as uuidv4 } from "uuid";
 
@@ -8,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const body = readRawBody(event);
   const slug = await genSlug(6);
   const uuid = await uuidv4();
-  const InsertMD = await supabase
+  /*const InsertMD = await supabase
     .from("markdown")
     .insert([{ slug: slug, content: body, date_created: date, ip: uuid }]);
     if (InsertMD.error) {
@@ -17,6 +18,11 @@ export default defineEventHandler(async (event) => {
         message: InsertMD.error.message,
       })
     }
+    */
+   const InsertMD = p`
+   insert into markdown (slug, content, date_created, ip)
+   value ("${slug}", "${body}", "${date}", "${uuid}")
+   `
   return {
     slug: slug,
     password: uuid,

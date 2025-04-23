@@ -1,19 +1,27 @@
 # Markdown API Backend
 Docs Page: https://md-api-backend.vercel.app/viewer/YikYZR
+
+## Notice
+Old content will NOT be transfered to the new Database, and the testing and the new Prod one as well. If you have data in the DB, I will export it and put the DB here. Since there is not any personal info (I hope you didn't use it as a place to store your passwords...) (or just move it? I looked at the supabase documentation and it may work?
+
+DB: https://archive.yhw.tw/projects/markdown-backend/ (Some where here if I can't move
+
 ### Want to use your local device?
 This project uses bun, but you can still use npm by changing all the bun -> npm :)
 ```bash
-git clone github.com/hpware/md-api-backend.git --depth=1
+git clone https://github.com/hpware/md-api-backend.git --depth=1
 cd md-api-backend
 bun install
 bun run dev
 ```
 ## The Stack:
 This project uses:
-- Supabase
+- Some legacy supabase db stuff
+- PostgreSQL (Hosted on Zeabur for now)
 - Nitro Build
 - Bun
 - uuidV4
+- Hackclub Nest
 ## About this project:
 This is a project I've been thinking about a while, a platform where you can put, store, and view markdown files, all self host-able. In December last year (2024), I build this platform (https://markdown.yuanhau.com ) using VueJS, Vite and Marked. To build a really bad front end for my markdown files stored on CloudFlare R2 or Github Pages.  I need a backend to push for my post, I have not found any **free** solutions, so I made my own, built with Nitro build. 
 
@@ -21,8 +29,16 @@ This is a project I've been thinking about a while, a platform where you can put
 ### 1. Switch off of Supabase
 There is nothing wrong with supabase, but it's just a wrapper for postgres, which I really want to directly access from the Javascript code.
 
+Progress: ✅
+
 ### 2. Use the same auth key
 For now, new slugs aka markdown posts, can be only deleted if the owner of the content (or me) decides to delete the contents, in the near future, the platform will allow multiple slugs (or contents) to be edited with one key, and one key only.
+
+Progress: ❎
+
+### 3. SQL injection
+After updating to postgres, this api is vunerable to SQL injection, this will be fixed sometime soon, for now the database will NOT be using the hackcub nest postgres database. In case my other app are affected.
+
 ## How to use
 ### /
 #### (GET)

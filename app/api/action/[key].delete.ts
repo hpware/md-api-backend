@@ -1,16 +1,22 @@
-import supabase from "../../../components/supabase";
+//import supabase from "../../../components/supabase";
+import p from "../../../components/database";
 
 export default defineEventHandler(async (event) => {
   try {
   const slug = getRouterParam(event, "key");
-  const DeleteMD = await supabase
+  /*const DeleteMD = await supabase
     .from("markdown")
     .delete()
     .eq("ip", slug);
-    if (DeleteMD.error) {
+    */
+   const DeleteMD = await p`
+   delete from markdown
+   where ip = ${slug}
+   `
+    if (!DeleteMD || DeleteMD === null || DeleteMD === undefined)  {
       throw createError({
-        statusCode: Number(DeleteMD.error.code),
-        message: DeleteMD.error.message,
+        statusCode: 500,
+        message: DeleteMD.toString(),
       })
     }
   return {

@@ -1,8 +1,9 @@
-import supabase from "../../components/supabase";
+//import supabase from "../../components/supabase";
+import p from "../../components/database";
 
 export default defineEventHandler(async (event) => {
         try {
-        const { data, error } = await supabase
+        /*const { data, error } = await supabase
             .from('health_check')
             .insert({
                 status: "ok"
@@ -22,7 +23,20 @@ export default defineEventHandler(async (event) => {
             database: {
                 status: 'connected',
             }
-        };
+        };*/
+        const check = p`
+        INSERT INTO health_check (status)
+        VALUES ('ok')
+      `;
+      
+        return {
+            status: 'healthy',
+            error: null,
+            timestamp: new Date().toISOString(),
+            database: {
+                status: 'connected',
+            }
+        }
     } catch (e) {
         return {
             status: "not healthy",

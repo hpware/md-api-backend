@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.48.1",
     "nitro-cors": "^0.7.1",
+    "postgres": "^3.4.5",
     "uuid": "^11.1.0"
   }
 }
